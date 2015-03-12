@@ -1,14 +1,10 @@
 
 #include "Timeline.hpp"
+#include "exception.hpp"
 #include "cgGraph.pb.h"
-
-#include "utility/exception.hpp"
-#include "utility/binary.hpp"
 
 #include <fstream>
 #include <iomanip>
-
-namespace U = utility;
 
 namespace DS {
 namespace ProbProcess {
@@ -65,8 +61,7 @@ template <typename Int> Int Timeline<Int>::size() const { return tl.size(); }
 
 template <typename Int> void Timeline<Int>::check_finalize() const {
   if (is_finalized) {
-    throw U::AlgorithmException("Timeline",
-                                "This instance has been finialized");
+    throw cgGraphError("This instance has been finialized");
   }
 }
 

@@ -2,11 +2,23 @@
 #include "Cover.hpp"
 #include "cgGraph.pb.h"
 
+#include <cmath>
 #include <fstream>
 #include <stdexcept>
 
 namespace DS {
 namespace ProbProcess {
+
+template <typename Real>
+Real euclid_distance(const State<Real> &x, const State<Real> &y) {
+  Real sum = 0.0;
+  auto bx = x.begin();
+  auto by = y.begin();
+  while (bx != x.end()) {
+    sum = std::pow(*bx++ - *by++, 2);
+  }
+  return std::sqrt(sum);
+}
 
 template <typename Int, typename Real>
 SimpleCover<Int, Real>::SimpleCover(unsigned int N, double r)
@@ -19,7 +31,7 @@ Int SimpleCover<Int, Real>::get_nearest(const State<Real> &x) {
   Int M = Omega.size();
   for (unsigned int m = 0; m < M; ++m) {
     const State<Real> &x_m = Omega[m];
-    double dist = R::euclid_distance(x, x_m);
+    double dist = euclid_distance(x, x_m);
     if (dist < min_dist) {
       nearest_idx = m;
       min_dist = dist;
@@ -52,13 +64,16 @@ void SimpleCover<Int, Real>::save(std::string filename) const {
       p->add_x(Omega[m][n]);
     }
   }
-  auto ofs = U::binary::ostream(filename);
-  omega.SerializeToOstream(ofs.get());
+  std::ofstream ofs(filename,
+                    std::ios::out | std::ios::binary | std::ios::trunc);
+  if (!ofs)
+    throw std::runtime_error("Cannot open file: " + filename);
+  omega.SerializeToOstream(&ofs);
 }
 
 template <typename Int, typename Real>
 double SimpleCover<Int, Real>::distance(Int i, Int j) const {
-  return U::euclid_distance(Omega[i].begin(), Omega[i].end(), Omega[j].begin());
+  return euclid_distance(Omega[i], Omega[j]);
 }
 
 template <typename Int, typename Real>
@@ -78,9 +93,11 @@ const std::vector<State<Real> > &SimpleCover<Int, Real>::get_Omega() const {
 
 template <typename Real = double>
 std::vector<State<Real> > load_Omega(std::string filename) {
-  auto ifs = U::binary::istream(filename);
+  std::ifstream ifs(filename, std::ios::in | std::ios::binary);
+  if (!ifs)
+    throw std::runtime_error("Cannot open file: " + filename);
   pb::Omega omega;
-  omega.ParseFromIstream(ifs.get());
+  omega.ParseFromIstream(&ifs);
   int M = omega.point_size();
   std::vector<State<Real> > Omega(M);
 
