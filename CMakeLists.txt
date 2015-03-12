@@ -1,5 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
+project(cgGraph)
+
+set(CMAKE_BUILD_TYPE Release)
+add_definitions("-Wall -std=c++11")
+
 add_custom_command(
   OUTPUT cgGraph.pb.cc
   DEPENDS cgGraph.proto
@@ -12,5 +17,9 @@ add_library(cgGraph STATIC
   TransitionMap.cpp
   cgGraph.pb.cc
 )
-
 target_link_libraries(cgGraph protobuf)
+
+add_custom_target(
+  document_html
+  COMMAND "doxygen" "doc/Doxyfile"
+)

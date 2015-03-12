@@ -2,15 +2,8 @@
 #include "Cover.hpp"
 #include "cgGraph.pb.h"
 
-#include "utility/algorithm.hpp"
-#include "utility/binary.hpp"
-#include "utility/range.hpp"
-
 #include <fstream>
 #include <stdexcept>
-
-namespace U = utility;
-namespace R = U::range;
 
 namespace DS {
 namespace ProbProcess {
