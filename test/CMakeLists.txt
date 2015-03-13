@@ -11,5 +11,5 @@ macro(mytest name)
 endmacro(mytest)
 
 mytest(Cover)
-# mytest(timeline)
+mytest(timeline)
 # mytest(transition_map)
