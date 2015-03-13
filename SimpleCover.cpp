@@ -15,7 +15,7 @@ Real euclid_distance(const State<Real> &x, const State<Real> &y) {
   auto bx = x.begin();
   auto by = y.begin();
   while (bx != x.end()) {
-    sum = std::pow(*bx++ - *by++, 2);
+    sum += std::pow(*bx++ - *by++, 2);
   }
   return std::sqrt(sum);
 }
