@@ -12,4 +12,4 @@ endmacro(mytest)
 
 mytest(Cover)
 mytest(timeline)
-# mytest(transition_map)
+mytest(transition_map)
