@@ -8,7 +8,7 @@ from numpy import array
 
 
 if __name__ == '__main__':
-    tmap = cgGraph.load_TransitionMap("test/SimpleCover/pp.bin")
+    tmap = cgGraph.load_TransitionMap("sample/pp.bin")
     G, _ = cgGraph.get_network(tmap)
     pos = nx.get_node_attributes(G, "comp")
     prob = nx.get_node_attributes(G, "prob")

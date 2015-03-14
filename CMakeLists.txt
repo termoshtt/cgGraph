@@ -4,6 +4,7 @@ project(cgGraph)
 
 set(CMAKE_BUILD_TYPE Release)
 add_definitions("-Wall -std=c++11")
+include_directories(.)
 
 add_custom_command(
   OUTPUT cgGraph.pb.cc
@@ -29,3 +30,4 @@ enable_testing()
 find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
 add_definitions(-DBOOST_TEST_DYN_LINK)
 add_subdirectory(test)
+add_subdirectory(sample)
