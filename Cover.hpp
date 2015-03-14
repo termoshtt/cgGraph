@@ -3,15 +3,13 @@
 #include <vector>
 #include <string>
 
-namespace DS {
-
 /** アトラクタ上のダイナミクスを表現する確率過程を数値的に導出する */
-namespace ProbProcess {
+namespace cgGraph {
 
 template <typename Real> using State = std::vector<Real>; ///< 状態点
 
 /*!
- * \interface CoverI Cover.hpp "DS/ProbProcess/Cover.hpp"
+ * \interface CoverI Cover.hpp "cgGraph/Cover.hpp"
  * アトラクタ@f$ \mathcal{A} \subset \mathbb{R}^N @f$ (コンパクトと仮定) の被覆
  * @f$ B_r(\Omega) = \cup_{x \in \Omega} B_r(x) @f$
  * を構成、管理する
@@ -62,7 +60,7 @@ template <typename Real = double>
 std::vector<State<Real> > load_Omega(std::string filename);
 
 /*!
- * \class SimpleCover Cover.hpp "DS/ProbProcess/Cover.hpp"
+ * \class SimpleCover Cover.hpp "cgGraph/Cover.hpp"
  * 線形に探査を行う、単純な被覆クラス
  *
  * Tested
@@ -93,5 +91,4 @@ public:
   const std::vector<State<Real> > &get_Omega() const;
 };
 
-} // namespace cover
-} // namespace DS
+} // namespace cgGraph

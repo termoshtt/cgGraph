@@ -4,12 +4,11 @@
 #include <vector>
 #include <tuple>
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 /*!
  * \class TransitionMap
- * \headerfile TransitionMap.hpp "DS/ProbProcess/TransitionMap.hpp"
+ * \headerfile TransitionMap.hpp "cgGraph/TransitionMap.hpp"
  * 有限状態空間における遷移図を生成・管理する
  *
  * 遷移は限られた状態間でしか生じないと思われるので密行列で保存せず、
@@ -27,7 +26,7 @@ public:
   TransitionMap();
 
   /** 状態のプロパティ
-   * \headerfile TransitionMap.hpp "DS/ProbProcess/TransitionMap.hpp" */
+   * \headerfile TransitionMap.hpp "DS/cgGraph/TransitionMap.hpp" */
   struct StateP {
     Int duration;   ///< 滞在時間の合計
     Int count;      ///< 滞在した回数
@@ -40,7 +39,7 @@ public:
   typedef std::vector<StateP> StateList;
 
   /** 遷移のプロパティ
-   * \headerfile TransitionMap.hpp "DS/ProbProcess/TransitionMap.hpp" */
+   * \headerfile TransitionMap.hpp "DS/cgGraph/TransitionMap.hpp" */
   struct TransitP {
     Int count;
     double prob; ///< 遷移確率
@@ -78,5 +77,4 @@ private:
   TransitMap transit_map;
 };
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph

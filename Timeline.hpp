@@ -4,11 +4,10 @@
 #include <string>
 #include <tuple>
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 /*!
- * \class Timeline Timeline.hpp "DS/ProbProcess/Timeline.hpp"
+ * \class Timeline Timeline.hpp "cgGraph/Timeline.hpp"
  * 抽象化した時系列を管理する(時系列を保持)
  *
  * - 時系列を全てメモリ上に保持する。
@@ -72,7 +71,7 @@ private:
 
 /*!
  * \class DisposableTimeline
- * \headerfile Timeline.hpp "DS/ProbProcess/Timeline.hpp"
+ * \headerfile Timeline.hpp "cgGraph/Timeline.hpp"
  * 抽象化した時系列を管理する(使い捨て)
  *
  * 時系列データをonlineで処理して、保存したくない場合は
@@ -82,5 +81,4 @@ private:
  */
 class DisposableTimeline {};
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph

@@ -6,8 +6,7 @@
 #include <fstream>
 #include <iomanip>
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 template <typename Int>
 Timeline<Int>::Timeline()
@@ -96,5 +95,4 @@ template class Timeline<unsigned int>;
 template class Timeline<unsigned long>;
 template class Timeline<unsigned long long>;
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph

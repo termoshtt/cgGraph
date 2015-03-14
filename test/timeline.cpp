@@ -7,9 +7,7 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <iostream>
 
-namespace PP = DS::ProbProcess;
-
-typedef PP::Timeline<unsigned long> TL;
+typedef cgGraph::Timeline<unsigned long> TL;
 
 /** begin/endのテスト */
 void show(const TL &tl, std::ostream &ost) {
@@ -60,7 +58,7 @@ BOOST_AUTO_TEST_CASE(timeline_push) {
   // cannot push after `finalize()`
   try {
     tl.push(4);
-  } catch (PP::cgGraphError &e) {
+  } catch (cgGraph::cgGraphError &e) {
     std::cout << e.what() << std::endl;
     BOOST_CHECK(true);
   }

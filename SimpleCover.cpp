@@ -6,8 +6,7 @@
 #include <fstream>
 #include <stdexcept>
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 template <typename Real>
 Real euclid_distance(const State<Real> &x, const State<Real> &y) {
@@ -122,5 +121,4 @@ load_Omega<float>(std::string filename);
 template std::vector<std::vector<double> >
 load_Omega<double>(std::string filename);
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph

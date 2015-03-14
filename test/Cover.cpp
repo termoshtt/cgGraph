@@ -7,13 +7,12 @@
 #include <iostream>
 
 namespace BT = boost::unit_test;
-namespace PP = DS::ProbProcess;
 
 typedef unsigned long Int;
 typedef double Real;
-typedef PP::State<Real> State;
-typedef PP::CoverI<Int, Real> CoverI;
-typedef PP::SimpleCover<Int, Real> sCover;
+typedef cgGraph::State<Real> State;
+typedef cgGraph::CoverI<Int, Real> CoverI;
+typedef cgGraph::SimpleCover<Int, Real> sCover;
 
 /** 一直線に進む場合 */
 BOOST_AUTO_TEST_CASE(Cover_line_1d) {
@@ -45,7 +44,7 @@ BOOST_AUTO_TEST_CASE(Cover_line_1d) {
   }
   cover.save("omega.bin");
 
-  auto omega = PP::load_Omega("omega.bin");
+  auto omega = cgGraph::load_Omega("omega.bin");
 
   unsigned int M_ = omega.size();
   unsigned int N_ = omega[0].size();

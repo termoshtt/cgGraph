@@ -5,8 +5,7 @@
 #include <algorithm>
 #include <fstream>
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 template <typename Int>
 TransitionMap<Int>::TransitionMap()
@@ -122,5 +121,4 @@ template class TransitionMap<unsigned int>;
 template class TransitionMap<unsigned long>;
 template class TransitionMap<unsigned long long>;
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph

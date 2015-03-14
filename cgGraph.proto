@@ -1,4 +1,4 @@
-package DS.ProbProcess.pb;
+package cgGraph.pb;
 
 message Point{
   repeated double x = 1;

@@ -12,8 +12,7 @@
 #include <fstream>
 #include <climits> // ULONG_MAX
 
-namespace DS {
-namespace ProbProcess {
+namespace cgGraph {
 
 /** 力学系を確率化する
  *
@@ -118,8 +117,8 @@ void output_dot(const TransitionMap<Int> &tmap, std::string prefix) {
 }
 
 template <typename Int, typename Real>
-void save_ProbProcess(const TransitionMap<Int> &tmap, std::string filename,
-                      const CoverI<Int, Real> *cover = nullptr) {
+void save_cgGraph(const TransitionMap<Int> &tmap, std::string filename,
+                  const CoverI<Int, Real> *cover = nullptr) {
   pb::TransitionMap pb_tmap;
   bool finalized = tmap.is_finalized();
   auto &state_list = tmap.get_states();
@@ -161,5 +160,4 @@ void save_ProbProcess(const TransitionMap<Int> &tmap, std::string filename,
   pb_tmap.SerializeToOstream(&ofs);
 }
 
-} // namespace ProbProcess
-} // namespace DS
+} // namespace cgGraph
