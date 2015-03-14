@@ -1,0 +1,43 @@
+package cgGraph.pb;
+
+message Point{
+  repeated double x = 1;
+}
+
+message Omega{
+  repeated Point point = 1;
+}
+
+message Chunk{
+  required uint64 index = 1;
+  required uint64 count = 2;
+}
+
+message TimeLine{
+  repeated Chunk chunk = 1;
+}
+
+message State{
+  required uint64 index = 1;
+  optional uint64 duration = 2;
+  optional uint64 count = 3;
+  optional double prob = 4;
+  optional double entropy = 5;
+  optional double rate = 6;
+  optional Point coordinate = 7;
+  // next 8
+}
+
+message Transit{
+  required uint64 from_index = 1;
+  required uint64 to_index = 2;
+  optional uint64 count = 3;
+  optional double prob = 4;
+  // next 5
+}
+
+message TransitionMap{
+  repeated State state = 1;
+  repeated Transit transit = 2;
+  // next 3
+}
