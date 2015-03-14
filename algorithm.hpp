@@ -5,62 +5,10 @@
 #include "TransitionMap.hpp"
 #include "cgGraph.pb.h"
 
-#include "EOM/interface.hpp"
-#include "utility/log.hpp"
-
 #include <iomanip>
 #include <fstream>
-#include <climits> // ULONG_MAX
 
 namespace cgGraph {
-
-/** 力学系を確率化する
- *
- * 時系列を生成し被覆を形成しインデックスの時系列を生成する。
- * 終了時刻を与える。
- */
-template <typename Int = unsigned long, typename Real = double>
-void run_finite_time(EOM::TimeEvolutionFunctorI<Real> &F /** 時間発展演算子 */,
-                     Real *x0 /** 初期値 */,
-                     unsigned long T /** 終了時刻(イテレーション回数) */,
-                     CoverI<Int, Real> &c /** 被覆を構成・保存する */,
-                     Timeline<Int> &tl /** 時系列を管理する */) {
-  for (unsigned long t = 0; t < T; ++t) {
-    Int idx = c.get_nearest(x0);
-    tl.push(idx);
-    F(x0);
-  }
-  tl.finalize();
-}
-
-/** 力学系を確率化する
- *
- * 時系列を生成し被覆を形成しインデックスの時系列を生成する。
- * duration だけ $\Omega$ の要素数が変化しなくなるまで継続する。
- */
-template <typename Int = unsigned long, typename Real = double>
-void
-run_until_converge(EOM::TimeEvolutionFunctorI<Real> &F /** 時間発展演算子 */,
-                   State<Real> &x0 /** 初期値 */,
-                   unsigned long duration /** 収束判定の継続時間 */,
-                   CoverI<Int, Real> &c /** 被覆を構成・保存する */,
-                   Timeline<Int> &tl /** 時系列を管理する */) {
-  unsigned long last = c.size();
-  for (unsigned long t = 0; t < ULONG_MAX; ++t) {
-    Int idx = c.get_nearest(x0);
-    tl.push(idx);
-    F(&x0[0]);
-    if (t % duration == 0) {
-      utility::log("#Omega", c.size(), std::clog);
-      if (c.size() == last) {
-        break;
-      } else {
-        last = c.size();
-      }
-    }
-  }
-  tl.finalize();
-}
 
 /** 各ノードが最初に出現した時刻を返す
  *
