@@ -8,11 +8,9 @@
 
 namespace BT = boost::unit_test;
 
-typedef unsigned long Int;
-typedef double Real;
-typedef cgGraph::State<Real> State;
-typedef cgGraph::CoverI<Int, Real> CoverI;
-typedef cgGraph::SimpleCover<Int, Real> sCover;
+typedef cgGraph::State State;
+typedef cgGraph::CoverI CoverI;
+typedef cgGraph::SimpleCover sCover;
 
 /** 一直線に進む場合 */
 BOOST_AUTO_TEST_CASE(Cover_line_1d) {

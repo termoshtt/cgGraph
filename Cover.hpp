@@ -6,7 +6,7 @@
 /** アトラクタ上のダイナミクスを表現する確率過程を数値的に導出する */
 namespace cgGraph {
 
-template <typename Real> using State = std::vector<Real>; ///< 状態点
+typedef std::vector<double> State; ///< 状態点
 
 /*!
  * \interface CoverI Cover.hpp "cgGraph/Cover.hpp"
@@ -19,16 +19,16 @@ template <typename Real> using State = std::vector<Real>; ///< 状態点
  * - @f$ B_r(x) = \{ x^\prime : \| x - x^\prime \| \leq r \} @f$
  *
  */
-template <typename Int = unsigned long, typename Real = double> class CoverI {
+class CoverI {
 public:
   /** 引数のxに一番近い @f$x_i \in \Omega@f$ のインデックスを返す。
    *  すべての @f$ i @f$ で @f$\| x - x_i \| > r@f$
    *  の時は新しく追加し、そのインデックスを返す */
-  virtual Int get_nearest(const State<Real> &x) = 0;
+  virtual uint64_t get_nearest(const State &x) = 0;
   /** @f$ x_i @f$ を返す */
-  virtual const State<Real> &get_node(Int i) const = 0;
+  virtual const State &get_node(uint64_t i) const = 0;
   /** @f$ \Omega @f$ の個数を返す */
-  virtual Int size() const = 0;
+  virtual uint64_t size() const = 0;
   /** 次元Nを返す */
   virtual unsigned int dim() const = 0;
   /** 被覆の直径@f$ r @f$を取得する */
@@ -40,13 +40,13 @@ public:
    * -------
    *  - unsigned long: M
    *  - unsigned int : N
-   *  - Real[N]: x0
-   *  - Real[N]: x1
+   *  - double[N]: x0
+   *  - double[N]: x1
    *  - ...
    */
   virtual void save(std::string filename) const = 0;
   /** 2つの点の距離を返す */
-  virtual double distance(Int, Int) const = 0;
+  virtual double distance(uint64_t, uint64_t) const = 0;
 };
 
 /** CoverI::save で保存した @f$ \Omega @f$ を読み出す
@@ -56,8 +56,7 @@ public:
  * test/simple_cover.cpp
  *  - SimpleCover::save -> load_Omega で値が不変
  */
-template <typename Real = double>
-std::vector<State<Real> > load_Omega(std::string filename);
+std::vector<State> load_Omega(std::string filename);
 
 /*!
  * \class SimpleCover Cover.hpp "cgGraph/Cover.hpp"
@@ -71,24 +70,23 @@ std::vector<State<Real> > load_Omega(std::string filename);
  *  - save -> load_Omega で値が不変
  *
  */
-template <typename Int = unsigned long, typename Real = double>
-class SimpleCover : public CoverI<Int, Real> {
+class SimpleCover : public CoverI {
   const unsigned int N;
   const double r;
-  std::vector<State<Real> > Omega;
+  std::vector<State> Omega;
 
 public:
   SimpleCover(unsigned int N /** 状態空間の次元 */, double r);
 
-  Int get_nearest(const State<Real> &x);
-  const State<Real> &get_node(Int i) const;
-  Int size() const;
+  uint64_t get_nearest(const State &x);
+  const State &get_node(uint64_t i) const;
+  uint64_t size() const;
   void save(std::string filename) const;
-  double distance(Int, Int) const;
+  double distance(uint64_t, uint64_t) const;
   unsigned int dim() const;
   double get_r() const;
 
-  const std::vector<State<Real> > &get_Omega() const;
+  const std::vector<State> &get_Omega() const;
 };
 
 } // namespace cgGraph

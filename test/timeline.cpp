@@ -7,7 +7,7 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <iostream>
 
-typedef cgGraph::Timeline<unsigned long> TL;
+typedef cgGraph::Timeline TL;
 
 /** begin/endのテスト */
 void show(const TL &tl, std::ostream &ost) {

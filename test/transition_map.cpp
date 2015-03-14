@@ -6,7 +6,7 @@
 #include <boost/test/floating_point_comparison.hpp>
 #include <iostream>
 
-typedef cgGraph::TransitionMap<unsigned long> TMap;
+typedef cgGraph::TransitionMap TMap;
 
 const double TH = 1e-13;
 
