@@ -10,6 +10,7 @@
 *.svg
 *.png
 *.pdf
+*.bin
 
 # for cmake
 CMakeCache.txt
