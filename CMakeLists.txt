@@ -5,9 +5,6 @@ project(cgGraph)
 set(CMAKE_BUILD_TYPE Release)
 add_definitions("-Wall -std=c++11")
 
-find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
-add_definitions(-DBOOST_TEST_DYN_LINK)
-
 add_custom_command(
   OUTPUT cgGraph.pb.cc
   DEPENDS cgGraph.proto
@@ -27,4 +24,7 @@ add_custom_target(
   COMMAND "doxygen" "doc/Doxyfile"
 )
 
+enable_testing()
+find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
+add_definitions(-DBOOST_TEST_DYN_LINK)
 add_subdirectory(test)
