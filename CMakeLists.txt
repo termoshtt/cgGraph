@@ -15,6 +15,7 @@ add_library(cgGraph STATIC
   SimpleCover.cpp
   Timeline.cpp
   TransitionMap.cpp
+  algorithm.cpp
   cgGraph.pb.cc
 )
 target_link_libraries(cgGraph protobuf)
