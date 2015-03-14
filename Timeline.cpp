@@ -8,18 +8,15 @@
 
 namespace cgGraph {
 
-template <typename Int>
-Timeline<Int>::Timeline()
-    : is_finalized(false), is_first(true) {}
+Timeline::Timeline() : is_finalized(false), is_first(true) {}
 
-template <typename Int>
-Timeline<Int>::Timeline(std::string filename)
+Timeline::Timeline(std::string filename)
     : is_finalized(false), is_first(false) /* 読み出した最後から続ける */
 {
   load(filename);
 }
 
-template <typename Int> void Timeline<Int>::push(Int i) {
+void Timeline::push(uint64_t i) {
   check_finalize();
   if (is_first) {
     is_first = false;
@@ -36,35 +33,28 @@ template <typename Int> void Timeline<Int>::push(Int i) {
   }
 }
 
-template <typename Int> void Timeline<Int>::finalize() {
+void Timeline::finalize() {
   if (!is_finalized) {
     tl.emplace_back(last_index, count);
     is_finalized = true;
   }
 }
 
-template <typename Int>
-typename Timeline<Int>::Iterator Timeline<Int>::begin() const {
-  return tl.begin();
-}
-template <typename Int>
-typename Timeline<Int>::Iterator Timeline<Int>::end() const {
-  return tl.end();
-}
-template <typename Int>
-const typename Timeline<Int>::Pair &Timeline<Int>::get(Int i) const {
-  return tl[i];
-}
+Timeline::Iterator Timeline::begin() const { return tl.begin(); }
 
-template <typename Int> Int Timeline<Int>::size() const { return tl.size(); }
+Timeline::Iterator Timeline::end() const { return tl.end(); }
 
-template <typename Int> void Timeline<Int>::check_finalize() const {
+const Timeline::Pair &Timeline::get(uint64_t i) const { return tl[i]; }
+
+uint64_t Timeline::size() const { return tl.size(); }
+
+void Timeline::check_finalize() const {
   if (is_finalized) {
     throw cgGraphError("This instance has been finialized");
   }
 }
 
-template <typename Int> void Timeline<Int>::load(std::string filename) {
+void Timeline::load(std::string filename) {
   std::ifstream ifs(filename, std::ios::in | std::ios::binary);
   if (!ifs)
     throw std::runtime_error("Cannot open file: " + filename);
@@ -76,7 +66,7 @@ template <typename Int> void Timeline<Int>::load(std::string filename) {
   }
 }
 
-template <typename Int> void Timeline<Int>::save(std::string filename) {
+void Timeline::save(std::string filename) {
   finalize();
   std::ofstream ofs(filename,
                     std::ios::out | std::ios::binary | std::ios::trunc);
@@ -90,9 +80,5 @@ template <typename Int> void Timeline<Int>::save(std::string filename) {
   }
   pbtl.SerializeToOstream(&ofs);
 }
-
-template class Timeline<unsigned int>;
-template class Timeline<unsigned long>;
-template class Timeline<unsigned long long>;
 
 } // namespace cgGraph

@@ -24,7 +24,7 @@ namespace cgGraph {
  *  \todo load後追加できるかを確認する
  *
  */
-template <typename Int = unsigned long> class Timeline {
+class Timeline {
 public:
   Timeline();
   /** `load(filename)`を使用して初期化する */
@@ -36,25 +36,25 @@ public:
   void load(std::string filename);
 
   /** (index, count)のペア */
-  typedef std::tuple<Int, Int> Pair;
+  typedef std::tuple<uint64_t, uint64_t> Pair;
   /** 保存した時系列へのアクセスのためのイテレータクラス */
   typedef typename std::vector<Pair>::const_iterator Iterator;
 
   /** インデックスを追加する */
-  void push(Int i);
+  void push(uint64_t i);
 
   /** 個々の保存した時系列のペア(index, count)へのアクセス */
-  const Pair &get(Int) const;
+  const Pair &get(uint64_t) const;
   /** 保存した時系列のペア(index, count)へのアクセス(begin) */
   Iterator begin() const;
   /** 保存した時系列のペア(index, count)へのアクセス(end) */
   Iterator end() const;
 
   /** 保存されているPairの数を返す */
-  Int size() const;
+  uint64_t size() const;
   /** 保存されている時系列の個数を返す
    *  \todo implement */
-  Int accumulate_size() const;
+  uint64_t accumulate_size() const;
 
   /** 最後のペアを登録する
    *
@@ -64,7 +64,7 @@ public:
 
 private:
   std::vector<Pair> tl;
-  Int last_index, count;
+  uint64_t last_index, count;
   bool is_finalized, is_first;
   void check_finalize() const;
 };
