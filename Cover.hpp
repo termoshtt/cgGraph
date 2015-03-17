@@ -34,18 +34,9 @@ public:
   /** 被覆の直径@f$ r @f$を取得する */
   virtual double get_r() const = 0;
 
-  /** @f$ \Omega @f$ をbinary形式で保存する
-   *
-   * 保存形式
-   * -------
-   *  - unsigned long: M
-   *  - unsigned int : N
-   *  - double[N]: x0
-   *  - double[N]: x1
-   *  - ...
-   */
+  /** @f$ \Omega @f$ を保存する */
   virtual void save(std::string filename) const = 0;
-  /** 2つの点の距離を返す */
+  /** 登録してある2つの点の距離を返す */
   virtual double distance(uint64_t, uint64_t) const = 0;
 };
 
@@ -57,36 +48,5 @@ public:
  *  - SimpleCover::save -> load_Omega で値が不変
  */
 std::vector<State> load_Omega(std::string filename);
-
-/*!
- * \class SimpleCover Cover.hpp "cgGraph/Cover.hpp"
- * 線形に探査を行う、単純な被覆クラス
- *
- * Tested
- * ------
- * test/simple_cover.cpp
- *  - 一直線に進む場合
- *  - @f$ \mathbb{R}^2 @f$ で半径1の円上を周る場合
- *  - save -> load_Omega で値が不変
- *
- */
-class SimpleCover : public CoverI {
-  const unsigned int N;
-  const double r;
-  std::vector<State> Omega;
-
-public:
-  SimpleCover(unsigned int N /** 状態空間の次元 */, double r);
-
-  uint64_t get_nearest(const State &x);
-  const State &get_node(uint64_t i) const;
-  uint64_t size() const;
-  void save(std::string filename) const;
-  double distance(uint64_t, uint64_t) const;
-  unsigned int dim() const;
-  double get_r() const;
-
-  const std::vector<State> &get_Omega() const;
-};
 
 } // namespace cgGraph

@@ -1,5 +1,5 @@
 
-#include "../Cover.hpp"
+#include "../SimpleCover.hpp"
 #include "../Timeline.hpp"
 #include "../algorithm.hpp"
 #include <iostream>
