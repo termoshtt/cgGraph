@@ -1,5 +1,5 @@
 
-#include "Cover.hpp"
+#include "SimpleCover.hpp"
 #include "cgGraph.pb.h"
 
 #include <cmath>
