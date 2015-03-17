@@ -34,18 +34,9 @@ public:
   /** 被覆の直径@f$ r @f$を取得する */
   virtual double get_r() const = 0;
 
-  /** @f$ \Omega @f$ をbinary形式で保存する
-   *
-   * 保存形式
-   * -------
-   *  - unsigned long: M
-   *  - unsigned int : N
-   *  - double[N]: x0
-   *  - double[N]: x1
-   *  - ...
-   */
+  /** @f$ \Omega @f$ を保存する */
   virtual void save(std::string filename) const = 0;
-  /** 2つの点の距離を返す */
+  /** 登録してある2つの点の距離を返す */
   virtual double distance(uint64_t, uint64_t) const = 0;
 };
 

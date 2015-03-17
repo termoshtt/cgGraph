@@ -5,8 +5,11 @@
 namespace cgGraph {
 
 /*!
- * \class SimpleCover Cover.hpp "cgGraph/SimpleCover.hpp"
+ * @class SimpleCover Cover.hpp "cgGraph/SimpleCover.hpp"
  * 線形に探査を行う、単純な被覆クラス
+ *
+ * SimpleCover::dist をオーバーライドする事で
+ * 任意の比較関数を使用できる
  *
  * Tested
  * ------
@@ -35,6 +38,7 @@ public:
   const std::vector<State> &get_Omega() const;
 
 protected:
+  /** 2つの状態間の距離、あるいは類似度を計算する */
   virtual double dist(const State &, const State &) const;
 };
 
