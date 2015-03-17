@@ -14,7 +14,6 @@ namespace cgGraph {
  *  - 一直線に進む場合
  *  - @f$ \mathbb{R}^2 @f$ で半径1の円上を周る場合
  *  - save -> load_Omega で値が不変
- *
  */
 class SimpleCover : public CoverI {
   const unsigned int N;
@@ -23,6 +22,7 @@ class SimpleCover : public CoverI {
 
 public:
   SimpleCover(unsigned int N /** 状態空間の次元 */, double r);
+  virtual ~SimpleCover() {}
 
   uint64_t get_nearest(const State &x);
   const State &get_node(uint64_t i) const;
@@ -33,6 +33,9 @@ public:
   double get_r() const;
 
   const std::vector<State> &get_Omega() const;
+
+protected:
+  virtual double dist(const State &, const State &) const;
 };
 
 } // namespace cgGraph
