@@ -12,7 +12,7 @@ add_custom_command(
   COMMAND "protoc" "cgGraph.proto" "--cpp_out=." "--python_out=."
 )
 
-add_library(cgGraph STATIC
+add_library(cgGraph SHARED
   Cover.cpp
   SimpleCover.cpp
   Timeline.cpp
@@ -22,13 +22,32 @@ add_library(cgGraph STATIC
 )
 target_link_libraries(cgGraph protobuf)
 
-add_custom_target(
-  document_html
-  COMMAND "doxygen" "doc/Doxyfile"
+
+install(TARGETS cgGraph
+  LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib/static)
+install(FILES
+  Cover.hpp
+  SimpleCover.hpp
+  Timeline.hpp
+  TransitionMap.hpp
+  algorithm.hpp
+  exception.hpp
+  DESTINATION include
 )
+install(FILES
+  cgGraph.py
+  cgGraph_pb2.py
+  DESTINATION lib
+)
+
+add_custom_target(document COMMAND "doxygen" "doc/Doxyfile")
+install(FILES doc/searchdata.xml DESTINATION doc)
+install(DIRECTORY doc/html DESTINATION doc)
 
 enable_testing()
 find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
 add_definitions(-DBOOST_TEST_DYN_LINK)
+
 add_subdirectory(test)
 add_subdirectory(sample)
