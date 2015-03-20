@@ -1,8 +1,6 @@
 cmake_minimum_required(VERSION 2.8)
 
-project(cgGraph
-  VERSION 1.0
-)
+project(cgGraph)
 
 set(CMAKE_BUILD_TYPE Release)
 add_definitions("-Wall -std=c++11")
