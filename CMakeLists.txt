@@ -34,7 +34,7 @@ install(FILES
   TransitionMap.hpp
   algorithm.hpp
   exception.hpp
-  DESTINATION include
+  DESTINATION include/cgGraph
 )
 install(FILES
   cgGraph.py
