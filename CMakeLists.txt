@@ -22,10 +22,11 @@ add_library(cgGraph SHARED
 )
 target_link_libraries(cgGraph protobuf)
 
-
 install(TARGETS cgGraph
+  EXPORT cgGraphConfig
+  INCLUDES DESTINATION include
   LIBRARY DESTINATION lib
-  ARCHIVE DESTINATION lib/static)
+)
 install(FILES
   Cover.hpp
   SimpleCover.hpp
@@ -39,6 +40,9 @@ install(FILES
   cgGraph.py
   cgGraph_pb2.py
   DESTINATION lib
+)
+install(EXPORT cgGraphConfig
+  DESTINATION cmake
 )
 
 add_custom_target(document COMMAND "doxygen" "doc/Doxyfile")
