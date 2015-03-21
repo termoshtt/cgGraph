@@ -19,6 +19,8 @@ std::vector<uint64_t> emergence_time(const Timeline &tl);
 /** Timeline から TransitionMap を構成する */
 TransitionMap count_transition(const Timeline &tl);
 
+void count_transition(const Timeline &tl, TransitionMap &);
+
 /** TransitionMapをDOT言語に出力する */
 void output_dot(const TransitionMap &tmap, std::string prefix);
 
