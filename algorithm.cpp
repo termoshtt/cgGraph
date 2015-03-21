@@ -26,6 +26,8 @@ std::vector<uint64_t> emergence_time(const Timeline &tl) {
 
 void count_transition(const Timeline &tl, TransitionMap &tmap) {
   auto itr = tl.begin();
+  if (itr == tl.end())
+    return;
   uint64_t from, to, count;
   for (std::tie(from, count) = *itr++; itr != tl.end(); itr++) {
     to = std::get<0>(*itr);
