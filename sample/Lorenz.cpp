@@ -34,7 +34,7 @@ int main(int argc, char const *argv[]) {
   }
   tl.finalize();
   auto tmap = cgGraph::count_transition(tl);
-  cgGraph::save_cgGraph(tmap, "pp.bin", &c);
+  cgGraph::save_graph(tmap, "pp.bin", &c);
 
   return 0;
 }

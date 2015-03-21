@@ -16,15 +16,17 @@ namespace cgGraph {
  */
 std::vector<uint64_t> emergence_time(const Timeline &tl);
 
-/** Timeline から TransitionMap を構成する */
+/** construct a transition map from a timeline. */
 TransitionMap count_transition(const Timeline &tl);
 
+/** count transitions in a timeline and append to an existing transition map. */
 void count_transition(const Timeline &tl, TransitionMap &);
 
 /** TransitionMapをDOT言語に出力する */
 void output_dot(const TransitionMap &tmap, std::string prefix);
 
-void save_cgGraph(const TransitionMap &tmap, std::string filename,
-                  const CoverI *cover = nullptr);
+/** save coarse-grained graph */
+void save_graph(const TransitionMap &tmap, std::string filename,
+                const CoverI *cover = nullptr);
 
 } // namespace cgGraph

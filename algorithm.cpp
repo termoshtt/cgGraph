@@ -59,8 +59,8 @@ void output_dot(const TransitionMap &tmap, std::string prefix) {
   ofs << "}" << std::endl;
 }
 
-void save_cgGraph(const TransitionMap &tmap, std::string filename,
-                  const CoverI *cover = nullptr) {
+void save_graph(const TransitionMap &tmap, std::string filename,
+                const CoverI *cover = nullptr) {
   pb::TransitionMap pb_tmap;
   bool finalized = tmap.is_finalized();
   auto &state_list = tmap.get_states();
