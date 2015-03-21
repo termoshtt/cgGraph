@@ -7,7 +7,7 @@ add_definitions("-Wall -std=c++11")
 include_directories(.)
 
 add_custom_command(
-  OUTPUT cgGraph.pb.cc
+  OUTPUT cgGraph.pb.cc cgGraph.pb.h
   DEPENDS cgGraph.proto
   COMMAND "protoc" "cgGraph.proto" "--cpp_out=." "--python_out=."
 )
@@ -34,6 +34,7 @@ install(FILES
   TransitionMap.hpp
   algorithm.hpp
   exception.hpp
+  cgGraph.pb.h
   DESTINATION include/cgGraph
 )
 install(FILES
