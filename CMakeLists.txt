@@ -42,6 +42,10 @@ install(FILES
   cgGraph_pb2.py
   DESTINATION lib
 )
+install(PROGRAMS
+  render_cgGraph
+  DESTINATION bin
+)
 install(EXPORT cgGraphConfig
   DESTINATION cmake
 )
