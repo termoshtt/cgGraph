@@ -10,9 +10,14 @@ import argparse
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("filename")
-    parser.add_argument("--node_size", type=int, default=30)
-    parser.add_argument("-o", "--output", default="network.pdf")
+    parser.add_argument("filename",
+                        help="file name of cgGraph binary")
+    parser.add_argument("--node_size", type=int, default=30,
+                        help="node size")
+    parser.add_argument("-o", "--output", default="network.pdf",
+                        help="output file name")
+    parser.add_argument("-d", "--directed", action="store_true",
+                        help="render as a directed graph")
     args = parser.parse_args()
 
     tmap = cgGraph.load_TransitionMap(args.filename)
@@ -22,7 +27,7 @@ def main():
     entropy = nx.get_node_attributes(G, "entropy")
     color = array(prob.values()) * array(entropy.values())
     nodes = nx.draw_networkx_nodes(G, pos, node_size=args.node_size, node_color=color, cmap=plt.cm.Blues)
-    nx.draw_networkx_edges(G, pos)
+    nx.draw_networkx_edges(G, pos, arrows=args.directed)
     plt.colorbar(nodes, label="entropy generation")
     plt.xlabel("PCA1")
     plt.ylabel("PCA2")
