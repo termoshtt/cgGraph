@@ -43,7 +43,8 @@ install(FILES
   DESTINATION lib
 )
 install(PROGRAMS
-  render_cgGraph
+  cgGraph_render
+  cgGraph_stats
   DESTINATION bin
 )
 install(EXPORT cgGraphConfig
