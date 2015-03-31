@@ -12,7 +12,7 @@ add_custom_command(
   COMMAND "protoc" "cgGraph.proto" "--cpp_out=." "--python_out=."
 )
 
-add_library(cgGraph SHARED
+add_library(cgGraph STATIC
   Cover.cpp
   SimpleCover.cpp
   Timeline.cpp
@@ -26,6 +26,7 @@ install(TARGETS cgGraph
   EXPORT cgGraphConfig
   INCLUDES DESTINATION include
   LIBRARY DESTINATION lib
+  ARCHIVE DESTINATION lib
 )
 install(FILES
   Cover.hpp
