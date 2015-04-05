@@ -9,13 +9,18 @@ def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("filename",
                         help="file name of cgGraph binary")
+    parser.add_argument("-v", "--verbose", action="store_true",
+                        help="output with explain")
     args = parser.parse_args()
 
     tmap = cgGraph.load_TransitionMap(args.filename)
-    print("#Node = {}".format(len(tmap.state)))
-    print("#Transit = {}".format(len(tmap.transit)))
-    print("#Transit/#Node = {}".format(float(len(tmap.transit)) / len(tmap.state)))
-    print("#Transit/#Node^2 = {}".format(float(len(tmap.transit)) / pow(len(tmap.state), 2)))
+    if args.verbose:
+        print("#State = {}".format(len(tmap.state)))
+        print("#Transit = {}".format(len(tmap.transit)))
+        print("Edge per node = {}".format(float(len(tmap.transit)) / len(tmap.state)))
+        print("Connecting ratio = {}".format(float(len(tmap.transit)) / pow(len(tmap.state), 2)))
+    else:
+        print("{State} {Transit}".format(State=len(tmap.state), Transit=len(tmap.transit)))
 
 if __name__ == '__main__':
     main()
