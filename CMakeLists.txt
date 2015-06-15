@@ -52,9 +52,8 @@ install(EXPORT cgGraphConfig
   DESTINATION cmake
 )
 
+add_custom_target(ctags ALL COMMAND "ctags" "-R" "-f" ".tags" "--languages=C++,python" "--exclude='CMake*'")
 add_custom_target(document COMMAND "doxygen" "doc/Doxyfile")
-install(FILES doc/searchdata.xml DESTINATION doc)
-install(DIRECTORY doc/html DESTINATION doc)
 
 enable_testing()
 find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
