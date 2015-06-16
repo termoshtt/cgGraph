@@ -6,6 +6,18 @@ set(CMAKE_BUILD_TYPE Release)
 add_definitions("-Wall -std=c++11")
 include_directories(.)
 
+find_package(Threads)
+find_package(Boost COMPONENTS
+  thread
+  log
+  log_setup
+  unit_test_framework
+  system
+REQUIRED)
+add_definitions(-DBOOST_TEST_DYN_LINK)
+add_definitions(-DBOOST_LOG_DYN_LINK)
+enable_testing()
+
 add_custom_command(
   OUTPUT cgGraph.pb.cc cgGraph.pb.h
   DEPENDS cgGraph.proto
@@ -18,9 +30,14 @@ add_library(cgGraph STATIC
   Timeline.cpp
   TransitionMap.cpp
   algorithm.cpp
+  logger.cpp
   cgGraph.pb.cc
 )
-target_link_libraries(cgGraph protobuf)
+target_link_libraries(cgGraph
+  protobuf
+  ${Boost_LIBRARIES}
+  ${CMAKE_THREAD_LIBS_INIT}
+)
 
 install(TARGETS cgGraph
   EXPORT cgGraphConfig
@@ -54,10 +71,6 @@ install(EXPORT cgGraphConfig
 
 add_custom_target(ctags ALL COMMAND "ctags" "-R" "-f" ".tags" "--languages=C++,python" "--exclude='CMake*'")
 add_custom_target(document COMMAND "doxygen" "doc/Doxyfile")
-
-enable_testing()
-find_package(Boost COMPONENTS unit_test_framework system REQUIRED)
-add_definitions(-DBOOST_TEST_DYN_LINK)
 
 add_subdirectory(test)
 add_subdirectory(sample)
