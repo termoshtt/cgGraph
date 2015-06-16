@@ -19,6 +19,9 @@ Attrs get_default_attrs() {
 }
 
 void init() {
+  logging::add_common_attributes();
+  logging::register_simple_formatter_factory<severity, char>("Severity");
+
   auto &lg = logger::get();
   logging::add_common_attributes();
   lg.add_attribute("Tag", log::attrs::make_constant("cgGraph"));

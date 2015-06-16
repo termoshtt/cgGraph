@@ -1,5 +1,6 @@
 
 #include "SimpleCover.hpp"
+#include "logger.hpp"
 #include "cgGraph.pb.h"
 
 #include <cmath>
@@ -11,9 +12,12 @@ namespace cgGraph {
 SimpleCover::SimpleCover(unsigned int N, double r) : N(N), r(r), Omega(0) {}
 
 uint64_t SimpleCover::get_nearest(const State &x) {
+  BOOST_LOG_FUNCTION()
   uint64_t nearest_idx = 0;
   double min_dist = r;
   uint64_t M = Omega.size();
+
+  auto &lg = logger::get();
   for (unsigned int m = 0; m < M; ++m) {
     const State &x_m = Omega[m];
     double d = dist(x, x_m);
@@ -25,6 +29,8 @@ uint64_t SimpleCover::get_nearest(const State &x) {
   if (min_dist < r) {
     return nearest_idx;
   }
+  BOOST_LOG_SEV(lg, severity::info) << "Create new index\t"
+                                    << "new_index:" << M;
   Omega.emplace_back(x);
   return M;
 }
