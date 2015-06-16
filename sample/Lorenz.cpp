@@ -2,7 +2,12 @@
 #include "../SimpleCover.hpp"
 #include "../Timeline.hpp"
 #include "../algorithm.hpp"
+#include "../logger.hpp"
 #include <iostream>
+
+#include <boost/log/attributes/mutable_constant.hpp>
+
+namespace attrs = boost::log::attributes;
 
 const double p = 10.0;
 const double r = 28.0;
@@ -18,6 +23,15 @@ void Lorenz(std::vector<double> &v, double dt) {
 }
 
 int main(int argc, char const *argv[]) {
+  cgGraph::init();
+  auto &lg = cgGraph::logger::get();
+  attrs::mutable_constant<unsigned int> counter(0);
+  lg.add_attribute("Counter", counter);
+  auto attr = cgGraph::get_default_attrs();
+  attr.push_back({ "count", "Counter" });
+
+  cgGraph::add_file_log("Lorenz.log", attr);
+
   std::vector<double> v = { 1, 0, 0 };
   double dt = 1e-3;
 
@@ -27,7 +41,9 @@ int main(int argc, char const *argv[]) {
 
   cgGraph::SimpleCover c(3, 3.0);
   cgGraph::Timeline tl;
-  for (unsigned int t = 0; t < 1000000; t++) {
+
+  for (unsigned int t = 0; t < 10000000; t++) {
+    counter.set(t);
     Lorenz(v, dt);
     unsigned long idx = c.get_nearest(v);
     tl.push(idx);
