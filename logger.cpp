@@ -33,7 +33,8 @@ void set_run_id(std::string id) {
   lg.add_attribute("RunID", attrs::make_constant(id));
 }
 
-void add_file_log(std::string filename, const Attrs &attr, bool auto_flush) {
+void add_file_log(std::string filename, const Attrs &attr, bool append,
+                  bool auto_flush) {
   std::stringstream ss;
   for (auto &&pair : attr) {
     const std::string &key = pair.first;
@@ -42,8 +43,11 @@ void add_file_log(std::string filename, const Attrs &attr, bool auto_flush) {
       ss << "\t";
     ss << key << ":%" << val << "%";
   }
+  auto m = std::ios_base::out;
+  if (append)
+    m = std::ios_base::app;
   logging::add_file_log(keywords::file_name = filename,
-                        keywords::format = ss.str(),
+                        keywords::format = ss.str(), keywords::open_mode = m,
                         keywords::auto_flush = auto_flush);
 }
 

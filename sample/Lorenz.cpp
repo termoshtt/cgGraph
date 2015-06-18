@@ -3,8 +3,9 @@
 #include "../Timeline.hpp"
 #include "../algorithm.hpp"
 #include "../logger.hpp"
-#include <iostream>
 
+#include <iostream>
+#include <boost/lexical_cast.hpp>
 #include <boost/log/attributes/mutable_constant.hpp>
 
 namespace attrs = boost::log::attributes;
@@ -23,25 +24,43 @@ void Lorenz(std::vector<double> &v, double dt) {
 }
 
 int main(int argc, char const *argv[]) {
+  if (argc != 2) {
+    std::cerr << "Usage: " << argv[0] << " [radius > 0]" << std::endl;
+    return 1;
+  }
+
+  // parameters
+  double dt = 1.0e-3;
+  double r = atof(argv[1]);
+  if (r <= 0) {
+    std::cerr << "Invalid radius : " << r << " (<=0)" << std::endl;
+    return 1;
+  }
+
+  // Boost.Log
   cgGraph::init();
   auto &lg = cgGraph::logger::get();
   attrs::mutable_constant<unsigned int> counter(0);
   lg.add_attribute("Counter", counter);
+  lg.add_attribute("Radius", attrs::make_constant(r));
   auto attr = cgGraph::get_default_attrs();
   attr.push_back({ "count", "Counter" });
+  attr.push_back({ "radius", "Radius" });
+  cgGraph::add_file_log("Lorenz.log", attr, true);
 
-  cgGraph::add_file_log("Lorenz.log", attr);
-
+  // initial
   std::vector<double> v = { 1, 0, 0 };
-  double dt = 1e-3;
 
+  // discards transient
   for (unsigned int t = 0; t < 10000; t++) {
     Lorenz(v, dt);
-  } // discards transient
+  }
 
-  cgGraph::SimpleCover c(3, 3.0);
+  // Ready for cgGraph
+  cgGraph::SimpleCover c(3, r);
   cgGraph::Timeline tl;
 
+  // Main
   for (unsigned int t = 0; t < 10000000; t++) {
     counter.set(t);
     Lorenz(v, dt);

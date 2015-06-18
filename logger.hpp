@@ -33,6 +33,6 @@ Attrs get_default_attrs();
 void init();
 void set_run_id(std::string id);
 void add_file_log(std::string filename, const Attrs &attr = get_default_attrs(),
-                  bool auto_flush = false);
+                  bool append = false, bool auto_flush = false);
 
 } // namespace cgGraph
