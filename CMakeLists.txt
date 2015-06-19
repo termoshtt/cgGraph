@@ -52,6 +52,7 @@ install(FILES
   TransitionMap.hpp
   algorithm.hpp
   exception.hpp
+  logger.hpp
   cgGraph.pb.h
   DESTINATION include/cgGraph
 )
