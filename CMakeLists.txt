@@ -9,13 +9,10 @@ include_directories(.)
 find_package(Threads)
 find_package(Boost COMPONENTS
   thread
-  log
-  log_setup
   unit_test_framework
   system
 REQUIRED)
 add_definitions(-DBOOST_TEST_DYN_LINK)
-add_definitions(-DBOOST_LOG_DYN_LINK)
 enable_testing()
 
 add_custom_command(
@@ -30,7 +27,6 @@ add_library(cgGraph STATIC
   Timeline.cpp
   TransitionMap.cpp
   algorithm.cpp
-  logger.cpp
   cgGraph.pb.cc
 )
 target_link_libraries(cgGraph
@@ -52,7 +48,6 @@ install(FILES
   TransitionMap.hpp
   algorithm.hpp
   exception.hpp
-  logger.hpp
   cgGraph.pb.h
   DESTINATION include/cgGraph
 )
