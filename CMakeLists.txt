@@ -6,9 +6,7 @@ set(CMAKE_BUILD_TYPE Release)
 add_definitions("-Wall -std=c++11")
 include_directories(.)
 
-find_package(Threads)
 find_package(Boost COMPONENTS
-  thread
   unit_test_framework
   system
 REQUIRED)
@@ -32,7 +30,6 @@ add_library(cgGraph STATIC
 target_link_libraries(cgGraph
   protobuf
   ${Boost_LIBRARIES}
-  ${CMAKE_THREAD_LIBS_INIT}
 )
 
 install(TARGETS cgGraph
