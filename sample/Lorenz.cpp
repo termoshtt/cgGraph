@@ -2,7 +2,6 @@
 #include "../SimpleCover.hpp"
 #include "../Timeline.hpp"
 #include "../algorithm.hpp"
-#include "../logger.hpp"
 
 #include <iostream>
 #include <boost/lexical_cast.hpp>
@@ -37,17 +36,6 @@ int main(int argc, char const *argv[]) {
     return 1;
   }
 
-  // Boost.Log
-  cgGraph::init();
-  auto &lg = cgGraph::logger::get();
-  attrs::mutable_constant<unsigned int> counter(0);
-  lg.add_attribute("Counter", counter);
-  lg.add_attribute("Radius", attrs::make_constant(r));
-  auto attr = cgGraph::get_default_attrs();
-  attr.push_back({ "count", "Counter" });
-  attr.push_back({ "radius", "Radius" });
-  cgGraph::add_file_log("Lorenz.log", attr, true);
-
   // initial
   std::vector<double> v = { 1, 0, 0 };
 
@@ -62,7 +50,6 @@ int main(int argc, char const *argv[]) {
 
   // Main
   for (unsigned int t = 0; t < 10000000; t++) {
-    counter.set(t);
     Lorenz(v, dt);
     unsigned long idx = c.get_nearest(v);
     tl.push(idx);
