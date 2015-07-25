@@ -1,6 +1,8 @@
 
 #include "information_function.hpp"
+#include "cgGraph.pb.h"
 #include <algorithm>
+#include <fstream>
 
 namespace cgGraph {
 namespace impl {
@@ -18,10 +20,9 @@ uint64_t num_head_same_elements(cIntIterator b1, cIntIterator e1,
 
 } // namespace impl
 
-std::map<uint64_t, std::vector<uint64_t> >
-num_accordance(const std::vector<uint64_t> &v) {
+NumAccordance num_accordance(const std::vector<uint64_t> &v) {
   std::map<uint64_t, impl::cIntIterator> first_emerge;
-  std::map<uint64_t, std::vector<uint64_t> > num_accord;
+  NumAccordance num_accord;
   for (auto it = v.begin(); it != v.end(); ++it) {
     auto idx = *it;
     if (first_emerge.find(idx) == first_emerge.end()) {
@@ -32,11 +33,23 @@ num_accordance(const std::vector<uint64_t> &v) {
     auto n_m = impl::num_head_same_elements(fit, v.end(), it);
     num_accord[idx].push_back(n_m);
   }
-  for (auto p : num_accord) {
-    auto nums = p.second;
-    std::sort(nums.begin(), nums.end());
-  }
   return num_accord;
+}
+
+void NumAccordance::save(std::string filename) {
+  pb::NumAccordance pbacc;
+  for (auto &p : *this) {
+    auto pp = pbacc.add_pair();
+    pp->set_index(p.first);
+    for (auto n : p.second) {
+      pp->add_n(n);
+    }
+  }
+  std::ofstream ofs(filename,
+                    std::ios::out | std::ios::binary | std::ios::trunc);
+  if (!ofs)
+    throw std::runtime_error("Cannot open file: " + filename);
+  pbacc.SerializeToOstream(&ofs);
 }
 
 } // namespace cgGraph
