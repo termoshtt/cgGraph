@@ -20,3 +20,13 @@ BOOST_AUTO_TEST_CASE(num_head_same_elements) {
   std::vector<uint64_t> d = { 2, 3 };
   BOOST_CHECK_EQUAL(num_head_same_elements(a.begin(), a.end(), d.begin()), 0);
 }
+
+BOOST_AUTO_TEST_CASE(num_accordance) {
+  std::vector<uint64_t> tl(10, 1);
+  auto ac = cgGraph::num_accordance(tl);
+  BOOST_CHECK_EQUAL(ac.size(), 1);
+  BOOST_CHECK_EQUAL(ac[1].size(), 9);
+  for (int n = 0; n < 10; ++n) {
+    BOOST_CHECK_EQUAL(ac[1][n], 10 - (n + 1));
+  }
+}
