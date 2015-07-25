@@ -21,12 +21,14 @@ BOOST_AUTO_TEST_CASE(num_head_same_elements) {
   BOOST_CHECK_EQUAL(num_head_same_elements(a.begin(), a.end(), d.begin()), 0);
 }
 
-BOOST_AUTO_TEST_CASE(num_accordance) {
-  std::vector<uint64_t> tl(10, 1);
-  auto ac = cgGraph::num_accordance(tl);
-  BOOST_CHECK_EQUAL(ac.size(), 1);
-  BOOST_CHECK_EQUAL(ac[1].size(), 9);
-  for (int n = 0; n < 10; ++n) {
-    BOOST_CHECK_EQUAL(ac[1][n], 10 - (n + 1));
-  }
+BOOST_AUTO_TEST_CASE(calc_info_func) {
+  using cgGraph::impl::calc_info_func;
+  std::vector<uint64_t> nm = { 1, 1, 2, 3, 3, 4, 4, 8 };
+  auto N = nm.size();
+  auto res = calc_info_func(1, nm.begin(), nm.end());
+  BOOST_CHECK_EQUAL(res[1], -log(N) / 1);
+  BOOST_CHECK_EQUAL(res[2], -log(N - 2) / 2);
+  BOOST_CHECK_EQUAL(res[3], -log(N - 3) / 3);
+  BOOST_CHECK_EQUAL(res[4], -log(N - 5) / 4);
+  BOOST_CHECK_EQUAL(res[8], -log(N - 7) / 8);
 }
