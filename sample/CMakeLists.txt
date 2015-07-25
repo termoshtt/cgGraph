@@ -7,3 +7,4 @@ endmacro(sample_executable)
 
 sample_executable(Lorenz)
 sample_executable(TentMap)
+sample_executable(LogisticMap)
