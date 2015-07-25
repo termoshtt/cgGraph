@@ -19,6 +19,6 @@ std::vector<uint64_t> iterate(double mu, double x, uint64_t N) {
 int main(int argc, char const *argv[]) {
   auto tl = iterate(1.9999, 0.123, 1 << 5);
   auto ac = cgGraph::num_accordance(tl);
-  ac.save("TentMap.acc");
+  cgGraph::save(ac, "TentMap.acc");
   return 0;
 }

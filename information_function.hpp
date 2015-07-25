@@ -5,12 +5,9 @@
 
 namespace cgGraph {
 
-class NumAccordance : public std::map<uint64_t, std::vector<uint64_t> > {
-public:
-  void save(std::string filename);
-};
-
+typedef std::map<uint64_t, std::vector<uint64_t> > NumAccordance;
 NumAccordance num_accordance(const std::vector<uint64_t> &v);
+void save(const NumAccordance &, std::string filename);
 
 namespace impl {
 

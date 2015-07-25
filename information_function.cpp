@@ -1,8 +1,8 @@
 
 #include "information_function.hpp"
-#include "cgGraph.pb.h"
 #include <algorithm>
 #include <fstream>
+#include <msgpack.hpp>
 
 namespace cgGraph {
 namespace impl {
@@ -36,20 +36,12 @@ NumAccordance num_accordance(const std::vector<uint64_t> &v) {
   return num_accord;
 }
 
-void NumAccordance::save(std::string filename) {
-  pb::NumAccordance pbacc;
-  for (auto &p : *this) {
-    auto pp = pbacc.add_pair();
-    pp->set_index(p.first);
-    for (auto n : p.second) {
-      pp->add_n(n);
-    }
-  }
+void save(const NumAccordance &acc, std::string filename) {
   std::ofstream ofs(filename,
                     std::ios::out | std::ios::binary | std::ios::trunc);
   if (!ofs)
     throw std::runtime_error("Cannot open file: " + filename);
-  pbacc.SerializeToOstream(&ofs);
+  msgpack::pack(ofs, acc);
 }
 
 } // namespace cgGraph
