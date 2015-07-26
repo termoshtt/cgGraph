@@ -1,4 +1,10 @@
 cmake_minimum_required(VERSION 2.8)
 
-add_executable(Lorenz Lorenz.cpp)
-target_link_libraries(Lorenz cgGraph)
+macro(sample_executable name)
+  add_executable(${name} ${name}.cpp)
+  target_link_libraries(${name} cgGraph)
+endmacro(sample_executable)
+
+sample_executable(Lorenz)
+sample_executable(TentMap)
+sample_executable(LogisticMap)

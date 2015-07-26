@@ -41,3 +41,11 @@ message TransitionMap{
   repeated Transit transit = 2;
   // next 3
 }
+
+message NumAccordance {
+  message Pair {
+    required uint64 index = 1;
+    repeated uint64 n = 2;
+  }
+  repeated Pair pair = 1;
+}

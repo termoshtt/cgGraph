@@ -25,6 +25,7 @@ add_library(cgGraph STATIC
   Timeline.cpp
   TransitionMap.cpp
   algorithm.cpp
+  information_function.cpp
   cgGraph.pb.cc
 )
 target_link_libraries(cgGraph

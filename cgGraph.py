@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
 import cgGraph_pb2
-import networkx as nx
-from sklearn.decomposition import PCA
 
 
 def _load(t):
@@ -16,6 +14,7 @@ def _load(t):
 load_TimeLine = _load(cgGraph_pb2.TimeLine)
 load_Omega = _load(cgGraph_pb2.Omega)
 load_TransitionMap = _load(cgGraph_pb2.TransitionMap)
+load_NumAccordance = _load(cgGraph_pb2.NumAccordance)
 
 
 def get_network(tmap, n_components=2, **kwds):
@@ -32,6 +31,10 @@ def get_network(tmap, n_components=2, **kwds):
     (networkx.DiGraph, sklearn.decomposition.PCA)
         Generated graph and fitted PCA object
     """
+
+    import networkx as nx
+    from sklearn.decomposition import PCA
+
     G = nx.DiGraph()
     pca = PCA(n_components=n_components, **kwds)
     comp = pca.fit_transform([st.coordinate.x for st in tmap.state])

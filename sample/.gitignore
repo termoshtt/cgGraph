@@ -1,3 +1,5 @@
 Lorenz
+TentMap
+LogisticMap
 .ipynb_checkpoints
-*.log
+*.msg
