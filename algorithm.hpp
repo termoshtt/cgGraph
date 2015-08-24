@@ -10,12 +10,6 @@
 
 namespace cgGraph {
 
-/** 各ノードが最初に出現した時刻を返す
- *
- * @return 各インデックスの出現時刻
- */
-std::vector<uint64_t> emergence_time(const Timeline &tl);
-
 /** construct a transition map from a timeline. */
 TransitionMap count_transition(const Timeline &tl);
 

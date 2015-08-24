@@ -6,79 +6,81 @@
 
 namespace cgGraph {
 
+typedef std::vector<uint64_t> Timeline;
+
 /*!
- * \class Timeline Timeline.hpp "cgGraph/Timeline.hpp"
- * 抽象化した時系列を管理する(時系列を保持)
+ * \class CompressedTimeline Timeline.hpp "cgGraph/Timeline.hpp"
+ * 時系列を管理する
  *
  * - 時系列を全てメモリ上に保持する。
  * - 1,1,1,1,2,2,2,3,3,4,4,4,... のような系列は
  *   (1,4),(2,3),(3,2),(4,3),... のように圧縮して保持する。
- * - 最後の分、例えば 1,1,2,2,3 のように終る場合は最後の3は廃棄する。
- *   保存したい場合は `finalize()` を呼ぶ。
  *
  * Tested
  * ------
- *  test/timeline.cpp
- *  - pushした列がが上述の通り圧縮される
- *  - save/loadで変らない
- *  \todo load後追加できるかを確認する
  *
  */
-class Timeline {
+class CompressedTimeline {
+  std::vector<std::pair<uint64_t, uint64_t> > tl;
+
 public:
-  Timeline();
-  /** `load(filename)`を使用して初期化する */
-  explicit Timeline(std::string filename);
+  class iterator {
+    CompressedTimeline *p;
+    uint64_t index, count;
 
-  /** 書き込む前に`finalize()`を実行する */
-  void save(std::string filename);
-  /** バイナリ形式を読みこむ */
-  void load(std::string filename);
+  public:
+    typedef uint64_t value_type;
 
-  /** (index, count)のペア */
-  typedef std::tuple<uint64_t, uint64_t> Pair;
-  /** 保存した時系列へのアクセスのためのイテレータクラス */
-  typedef typename std::vector<Pair>::const_iterator Iterator;
+    iterator(CompressedTimeline *p_) : p(p_), index(0), count(1) {}
 
-  /** インデックスを追加する */
-  void push(uint64_t i);
+    bool operator==(const iterator &x) const {
+      if (p != x.p)
+        return false;
+      if (p == nullptr)
+        return true;
+      if (index == x.index && count == x.count)
+        return true;
+      return false;
+    }
+    bool operator!=(const iterator &x) const { return !(*this == x); }
+    void operator++() {
+      if (!p)
+        return;
+      if (count < p->tl[index].second) {
+        count++;
+        return;
+      }
+      index++;
+      count = 1;
+      if (index >= p->tl.size())
+        p = nullptr;
+    }
+    uint64_t &operator*() const { return p->tl[index].first; }
+  };
+  iterator begin() { return iterator(this); }
+  iterator end() { return iterator(nullptr); }
 
-  /** 個々の保存した時系列のペア(index, count)へのアクセス */
-  const Pair &get(uint64_t) const;
-  /** 保存した時系列のペア(index, count)へのアクセス(begin) */
-  Iterator begin() const;
-  /** 保存した時系列のペア(index, count)へのアクセス(end) */
-  Iterator end() const;
+  void push_back(uint64_t value) {
+    if (tl.empty()) {
+      tl.emplace_back(value, 1);
+      return;
+    }
+    auto &last = *(tl.end() - 1);
+    if (value == last.first) {
+      last.second++;
+    } else {
+      tl.emplace_back(value, 1);
+    }
+  }
 
-  /** 保存されているPairの数を返す */
-  uint64_t size() const;
-  /** 保存されている時系列の個数を返す
-   *  \todo implement */
-  uint64_t accumulate_size() const;
+  uint64_t size() const {
+    uint64_t sum = 0;
+    for (auto &p : tl)
+      sum += p.second;
+    return sum;
+  }
 
-  /** 最後のペアを登録する
-   *
-   * 1,2,3,4,4,4 なら(4,3)を登録する
-   */
-  void finalize();
-
-private:
-  std::vector<Pair> tl;
-  uint64_t last_index, count;
-  bool is_finalized, is_first;
-  void check_finalize() const;
+  uint64_t chunk_size() const { return tl.size(); }
 };
-
-/*!
- * \class DisposableTimeline
- * \headerfile Timeline.hpp "cgGraph/Timeline.hpp"
- * 抽象化した時系列を管理する(使い捨て)
- *
- * 時系列データをonlineで処理して、保存したくない場合は
- * Timeline の変りにこちらを使用する。
- *
- * \todo 詳細設計
- */
-class DisposableTimeline {};
 
 } // namespace cgGraph

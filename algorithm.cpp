@@ -8,43 +8,6 @@
 
 namespace cgGraph {
 
-std::vector<uint64_t> emergence_time(const Timeline &tl) {
-  uint64_t idx0 = std::get<0>(tl.get(0));
-  std::vector<uint64_t> e(idx0 + 1, 0);
-  e[idx0] = 0;
-  uint64_t time = std::get<1>(tl.get(0));
-  for (uint64_t n = 1; n < tl.size(); n++) {
-    uint64_t idx = std::get<0>(tl.get(n));
-    if (idx >= e.size()) {
-      e.resize(idx + 1, 0);
-    }
-    e[idx] = time;
-    time += std::get<1>(tl.get(n));
-  }
-  return std::move(e);
-}
-
-void count_transition(const Timeline &tl, TransitionMap &tmap) {
-  auto itr = tl.begin();
-  if (itr == tl.end())
-    return;
-  uint64_t from, to, count;
-  for (std::tie(from, count) = *itr++; itr != tl.end(); itr++) {
-    to = std::get<0>(*itr);
-    tmap.push(from, to, count);
-    /* for next */
-    from = to;
-    count = std::get<1>(*itr);
-  }
-}
-
-TransitionMap count_transition(const Timeline &tl) {
-  TransitionMap tmap;
-  count_transition(tl, tmap);
-  tmap.finalize();
-  return std::move(tmap);
-}
-
 void output_dot(const TransitionMap &tmap, std::string prefix) {
   std::ofstream ofs(prefix + ".dot");
 

@@ -22,7 +22,6 @@ add_custom_command(
 add_library(cgGraph STATIC
   Cover.cpp
   SimpleCover.cpp
-  Timeline.cpp
   TransitionMap.cpp
   algorithm.cpp
   information_function.cpp

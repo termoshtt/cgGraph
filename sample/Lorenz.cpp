@@ -52,9 +52,8 @@ int main(int argc, char const *argv[]) {
   for (unsigned int t = 0; t < 10000000; t++) {
     Lorenz(v, dt);
     unsigned long idx = c.get_nearest(v);
-    tl.push(idx);
+    tl.push_back(idx);
   }
-  tl.finalize();
   auto tmap = cgGraph::count_transition(tl);
   cgGraph::save_graph(tmap, "pp.bin", &c);
 
