@@ -6,10 +6,10 @@
 
 namespace cgGraph {
 
-typedef std::vector<uint64_t> Timeline;
-
 /*!
- * \class CompressedTimeline Timeline.hpp "cgGraph/Timeline.hpp"
+ * \class CompressedTimeline
+ * \headerfile CompressedTimeline.hpp "cgGraph/CompressedTimeline.hpp"
+ *
  * 時系列を管理する
  *
  * - 時系列を全てメモリ上に保持する。
@@ -18,7 +18,7 @@ typedef std::vector<uint64_t> Timeline;
  *
  * Tested
  * ------
- *
+ *  -
  */
 class CompressedTimeline {
   std::vector<std::pair<uint64_t, uint64_t> > tl;

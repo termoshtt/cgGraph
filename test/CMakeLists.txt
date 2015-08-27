@@ -11,6 +11,4 @@ macro(mytest name)
 endmacro(mytest)
 
 mytest(Cover)
-mytest(timeline)
-mytest(transition_map)
 mytest(information_function)
