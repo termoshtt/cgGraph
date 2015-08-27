@@ -11,4 +11,5 @@ macro(mytest name)
 endmacro(mytest)
 
 mytest(Cover)
+mytest(Transition)
 mytest(information_function)
