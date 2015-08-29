@@ -8,8 +8,14 @@ namespace cgGraph {
 
 typedef std::vector<double> Prob; ///< probability density @f$ p(x) @f$
 typedef std::pair<uint64_t, uint64_t> Transit;
-typedef std::map<Transit, double> cProb; ///< conditional probability
-                                         ///  @f$ p(y|x) @f$
+
+/** conditional probability @f$ p(y|x) @f$ */
+class cProb : public std::map<Transit, double> {
+public:
+  double operator()(uint64_t from, uint64_t to) const {
+    return this->at(Transit(from, to));
+  }
+};
 
 /*!
  * Count transitons from timeline
@@ -48,16 +54,23 @@ inline std::tuple<Prob, cProb> count_transition(Iter b, Iter e) {
     const Transit &t = pair.first;
     uint64_t from = t.first;
     uint64_t c = pair.second;
-    if (from == now) {
-      psum += c;
-      cp[t] = c;
-      ts.push_back(t);
-      continue;
+
+    if (from != now) {
+      double invSum = 1.0 / psum;
+      for (auto &&t : ts) {
+        cp[t] *= invSum;
+      }
+      ts.clear();
+      now = from;
+      psum = 0.0;
     }
-    double invSum = 1.0 / psum;
-    for (auto &&t : ts) {
-      cp[t] *= invSum;
-    }
+    psum += c;
+    cp[t] = c;
+    ts.push_back(t);
+  }
+  double invSum = 1.0 / psum;
+  for (auto &&t : ts) {
+    cp[t] *= invSum;
   }
   return std::make_tuple(p, cp);
 }
