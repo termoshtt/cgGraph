@@ -8,12 +8,11 @@ message Omega{
   repeated Point point = 1;
 }
 
-message Chunk{
-  required uint64 index = 1;
-  required uint64 count = 2;
-}
-
-message TimeLine{
+message Timeline{
+  message Chunk{
+    required uint64 index = 1;
+    required uint64 count = 2;
+  }
   repeated Chunk chunk = 1;
 }
 
