@@ -12,7 +12,8 @@ typedef std::pair<uint64_t, uint64_t> Transit;
 /** conditional probability @f$ p(y|x) @f$ */
 class cProb : public std::map<Transit, double> {
 public:
-  double operator()(uint64_t from, uint64_t to) const {
+  /** return @f$p(y|x)@f$ */
+  double operator()(uint64_t from /** x */, uint64_t to /** y */) const {
     return this->at(Transit(from, to));
   }
 };
