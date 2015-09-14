@@ -22,6 +22,23 @@ BOOST_AUTO_TEST_CASE(transition_same_indices) {
   BOOST_CHECK_EQUAL(cp(2, 2), 1.0);
 }
 
+BOOST_AUTO_TEST_CASE(transition_sequence) {
+  std::vector<uint64_t> v(10);
+  uint64_t count = 0;
+  for (auto &i : v) {
+    i = count++;
+  }
+  auto &&res = cgGraph::count_transition(v.begin(), v.end());
+  auto &p = std::get<0>(res);
+  BOOST_CHECK_EQUAL(p.size(), 9); // last value is not counted.
+
+  auto &cp = std::get<1>(res);
+  BOOST_CHECK_EQUAL(cp.size(), 9);
+  for (int i = 0; i < 9; ++i) {
+    BOOST_CHECK_CLOSE(cp(i, i + 1), 1.0, TH);
+  }
+}
+
 BOOST_AUTO_TEST_CASE(transition_simple) {
   std::vector<uint64_t> v(10, 2);
   for (int i = 0; i < 10; ++i) {
@@ -29,7 +46,7 @@ BOOST_AUTO_TEST_CASE(transition_simple) {
   }
   auto &&res = cgGraph::count_transition(v.begin(), v.end());
   auto &p = std::get<0>(res);
-  BOOST_CHECK_EQUAL(p.size(), 81 + 1);
+  BOOST_CHECK_EQUAL(p.size(), 64 + 1);
 
   auto &cp = std::get<1>(res);
   BOOST_CHECK_EQUAL(cp.size(), 9);
