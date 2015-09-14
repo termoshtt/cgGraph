@@ -30,7 +30,7 @@ BOOST_AUTO_TEST_CASE(transition_sequence) {
   }
   auto &&res = cgGraph::count_transition(v.begin(), v.end());
   auto &p = std::get<0>(res);
-  BOOST_CHECK_EQUAL(p.size(), 10);
+  BOOST_CHECK_EQUAL(p.size(), 9); // last value is not counted.
 
   auto &cp = std::get<1>(res);
   BOOST_CHECK_EQUAL(cp.size(), 9);
@@ -46,7 +46,7 @@ BOOST_AUTO_TEST_CASE(transition_simple) {
   }
   auto &&res = cgGraph::count_transition(v.begin(), v.end());
   auto &p = std::get<0>(res);
-  BOOST_CHECK_EQUAL(p.size(), 81 + 1);
+  BOOST_CHECK_EQUAL(p.size(), 64 + 1);
 
   auto &cp = std::get<1>(res);
   BOOST_CHECK_EQUAL(cp.size(), 9);
