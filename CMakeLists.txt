@@ -22,6 +22,7 @@ add_custom_command(
 add_library(cgGraph STATIC
   Cover.cpp
   SimpleCover.cpp
+  Entropy.cpp
   information_function.cpp
   cgGraph.pb.cc
 )

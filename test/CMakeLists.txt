@@ -12,4 +12,5 @@ endmacro(mytest)
 
 mytest(Cover)
 mytest(Transition)
+mytest(Entropy)
 mytest(information_function)
