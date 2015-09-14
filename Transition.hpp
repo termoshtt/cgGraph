@@ -36,7 +36,7 @@ inline std::tuple<Prob, cProb> count_transition(Iter b, Iter e) {
   std::map<Transit, uint64_t> tcount;
   while (b != e) {
     idx = *b++;
-    if (idx > count.size())
+    if (idx >= count.size())
       count.resize(idx + 1, 0);
     count[idx] += 1;
     Transit t(pre, idx);
