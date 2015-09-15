@@ -25,3 +25,8 @@ Testing
 # for protobuf
 cgGraph.pb.*
 cgGraph_pb2.py
+
+# runtimes
+.ipynb_checkpoints
+*.msg
+*.yml
