@@ -65,4 +65,4 @@ add_custom_target(ctags ALL COMMAND "ctags" "-R" "-f" ".tags" "--languages=C++,p
 add_custom_target(document COMMAND "doxygen" "doc/Doxyfile")
 
 add_subdirectory(test)
-# add_subdirectory(sample)
+add_subdirectory(sample)
